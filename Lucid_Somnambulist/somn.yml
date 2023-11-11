@@ -21,7 +21,7 @@ dependencies:
     - Pillow
     - PyYAML
     - colorama
-    - tensorflow[and-cuda]
+    - tensorflow=2.12
     - keras-tuner
     - attrs
 
