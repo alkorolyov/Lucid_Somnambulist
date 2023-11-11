@@ -21,9 +21,9 @@ cd Lucid_Somnambulist/Lucid_Somnambulist
 mamba env create --name somn --file somn.yml
 conda activate somn
 wget https://github.com/SEDenmarkLab/molli_firstgen/archive/refs/heads/main.zip -O ~/molli.zip 
-pip install ~/molli.zip #molli package
+~/miniforge3/envs/somn/bin/pip install ~/molli.zip #molli package
 
-pip install -e . # editable mode
+~/miniforge3/envs/somn/bin/pip install -e . # editable mode
 
 # Check installation
 python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
