@@ -1,4 +1,5 @@
 ##Something
+import sys
 from sys import argv
 from argparse import ArgumentParser
 
@@ -187,7 +188,7 @@ Here is a simple summary/guide:
 
 
 def main():
-    # print("DEV - module")
+    print("DEV - module")
     parser = ArgumentParser(usage=use_msg)
     parser.add_argument(
         nargs="?",
@@ -209,7 +210,7 @@ def main():
         default=False,
     )
     args = parser.parse_args()
-    # print(args)
+    print(args)
     if args.operation == "predict":  ## Make predictions
         try:
             _run_predictions(args)
@@ -240,3 +241,8 @@ Ensure that project ID is provided, or specify 'new'."
         raise Exception(
             f"DEV - {args.operation} implementation through CLI is under development"
         )
+
+
+if __name__ == "__main__":
+    sys.argv[1:] = ['partition', 'new', 'val']
+    main()
