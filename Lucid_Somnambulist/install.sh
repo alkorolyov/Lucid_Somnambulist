@@ -14,12 +14,11 @@ wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge
 bash Miniforge3-Linux-x86_64.sh -b
 source ~/miniconda3/etc/profile.d/conda.sh
 source ~/miniconda3/etc/profile.d/mamba.sh
-conda activate
 
 # somn
 git clone https://github.com/alkorolyov/Lucid_Somnambulist
 cd Lucid_Somnambulist/Lucid_Somnambulist
-mamba env create --name somn --file somn.yml
+mamba create --name somn --file somn.yml
 conda activate somn
 wget https://github.com/SEDenmarkLab/molli_firstgen/archive/refs/heads/main.zip -O ~/molli.zip 
 pip install ~/molli.zip #molli package
