@@ -1,5 +1,22 @@
+
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
+sudo dpkg -i cuda-keyring_1.0-1_all.deb
+sudo apt-get update
+# sudo apt-get -y install cuda=${cuda_version}
+sudo apt-get -y install cuda=11.8.0-1
+
+sudo apt-get install libcudnn8=8.6.0.163-1+cuda11.8
+sudo apt-get install libcudnn8-dev=8.6.0.163-1+cuda11.8
+sudo apt-get install libcudnn8-samples=8.6.0.163-1+cuda11.8
+
+#cudnn_version=8.6.0.163
+#cuda_version=11.8
+# sudo apt-get install libcudnn8=${cudnn_version}-1+cuda${cuda_version}
+# sudo apt-get install libcudnn8-dev=${cudnn_version}-1+cuda${cuda_version}
+# sudo apt-get install libcudnn8-samples=${cudnn_version}-1+cuda${cuda_version}
+
 # miniforge3
-CONDA='anaconda3' # IDE can automatically detect conda
+CONDA='anaconda' # IDE can automatically detect conda
 wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
 bash Miniforge3-Linux-x86_64.sh -b -p $CONDA
 source ~/$CONDA/etc/profile.d/conda.sh
