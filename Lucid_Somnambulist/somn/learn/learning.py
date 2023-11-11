@@ -790,16 +790,15 @@ def hypermodel_search(
         serialized as well. For Regression, a pred vs obs plot is saved as a .png, one for train vs val and one for train vs test. For classification, no plot is saved,
         but several classification metrics are saved to the JSON which are specific to classification.
 
-
     """
-    if cpu_testing == False:
+    if not cpu_testing:
         config = tf.compat.v1.ConfigProto(
             device_count={"GPU": 0}
         )  ## DEV - trying to specify a specific GPU.
         config.gpu_options.allow_growth = True
         session = tf.compat.v1.Session(config=config)
-    # elif cpu_testing == True:  # TEST - this was not the goal here. CPU is not going to be useful for this.
-    #     config = tf.compat.v1.ConfigProto(device_count={"GPU": 0})
+    # elif cpu_testing:  # TEST - this was not the goal here. CPU is not going to be useful for this.
+    #     config = tf.compat.v1.ConfigProto(device_count={"CPU": 0})
     #     session = tf.compat.v1.Session(config=config)
     # import sys
     # exp = sys.argv[1]
@@ -932,7 +931,9 @@ the utility function somn.calculate.preprocess.prep_mc_labels"
             use_multiprocessing=True,
             # validation_split=0.15,
             validation_data=(xval, yval),
-            callbacks=[tensorboard, stop_nan],
+            # callbacks=[tensorboard, stop_nan],
+            callbacks=[stop_nan], # slow callbacks
+            verbose=2,
             epochs=epoch_depth,
         )  ## CHANGE increased this to 200 with change in optimizer to Adam, variable learning rate, and now using data augmentation during train
         val_hist = history.history[deep_objective]

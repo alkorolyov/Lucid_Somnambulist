@@ -22,5 +22,23 @@
         "timestamp": "2023-10-31",
         "unique": "23da5506783411ee9ed918c04d0a4970",
         "identifier": "val"
+    },
+    "cafbcb1a808811ee87a200155d222bef": {
+        "path": "somn_scratch/cafbcb1a808811ee87a200155d222bef/",
+        "timestamp": "2023-11-11",
+        "unique": "cafbcb1a808811ee87a200155d222bef",
+        "identifier": "test_proj"
+    },
+    "4213e840808e11eeb62e00155d222bef": {
+        "path": "somn_scratch/4213e840808e11eeb62e00155d222bef/",
+        "timestamp": "2023-11-11",
+        "unique": "4213e840808e11eeb62e00155d222bef",
+        "identifier": "test_proj"
+    },
+    "c0c1e4c6808e11ee826900155d222bef": {
+        "path": "somn_scratch/c0c1e4c6808e11ee826900155d222bef/",
+        "timestamp": "2023-11-11",
+        "unique": "c0c1e4c6808e11ee826900155d222bef",
+        "identifier": "test_proj"
     }
 }
