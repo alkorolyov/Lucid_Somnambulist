@@ -17,12 +17,13 @@ dependencies:
   - scipy
   - rdkit
   - pip>=23
+  - tensorflow
   - pip:
     - Pillow
     - PyYAML
     - colorama
-#    - tensorflow==2.12
-    - tensorflow
+    # - tensorflow==2.12
+    # - tensorflow
     - keras-tuner
     - attrs
 
