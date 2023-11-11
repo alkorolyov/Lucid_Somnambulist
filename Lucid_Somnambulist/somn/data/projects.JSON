@@ -40,5 +40,11 @@
         "timestamp": "2023-11-11",
         "unique": "c0c1e4c6808e11ee826900155d222bef",
         "identifier": "test_proj"
+    },
+    "96b2ad4680b611ee9dca00155d222bef": {
+        "path": "somn_scratch/96b2ad4680b611ee9dca00155d222bef/",
+        "timestamp": "2023-11-11",
+        "unique": "96b2ad4680b611ee9dca00155d222bef",
+        "identifier": "test_proj"
     }
 }

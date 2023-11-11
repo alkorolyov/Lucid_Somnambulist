@@ -258,7 +258,7 @@ Ensure that project ID is provided, or specify 'new'."
 
 if __name__ == "__main__":
     pass
-    # sys.argv[1:] = ['partition', 'new', 'test_proj'] # run once
+    sys.argv[1:] = ['partition', 'new', 'test_proj'] # run once
     # sys.argv[1:] = ['partition', 'last', 'test_proj']
-    sys.argv[1:] = ['learn', 'last', 'test_exp']
+    # sys.argv[1:] = ['learn', 'last', 'test_exp']
     main()
