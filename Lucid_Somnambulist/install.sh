@@ -18,7 +18,7 @@ source ~/miniforge3/etc/profile.d/mamba.sh
 # somn
 git clone https://github.com/alkorolyov/Lucid_Somnambulist
 cd Lucid_Somnambulist/Lucid_Somnambulist
-mamba create --name somn --file somn.yml
+mamba env create --name somn --file somn.yml
 conda activate somn
 wget https://github.com/SEDenmarkLab/molli_firstgen/archive/refs/heads/main.zip -O ~/molli.zip 
 pip install ~/molli.zip #molli package
