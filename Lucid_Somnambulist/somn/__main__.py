@@ -244,5 +244,6 @@ Ensure that project ID is provided, or specify 'new'."
 
 
 if __name__ == "__main__":
-    sys.argv[1:] = ['partition', 'new', 'val']
+    # sys.argv[1:] = ['partition', 'new', 'test']
+    # sys.argv[1:] = ['learn', 'last', 'default']
     main()

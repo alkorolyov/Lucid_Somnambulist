@@ -341,7 +341,7 @@ class PropheticInput:
     @classmethod
     def from_col(cls, col, smi_list, role_list, parser):
         """
-        Initiate pipelien for new molecules
+        Initiate pipeline for new molecules
 
         collection, smiles list, role list
         """

@@ -22,5 +22,11 @@
         "timestamp": "2023-10-31",
         "unique": "23da5506783411ee9ed918c04d0a4970",
         "identifier": "val"
+    },
+    "543f0316805b11ee94b000155d29df2a": {
+        "path": "somn_scratch/543f0316805b11ee94b000155d29df2a/",
+        "timestamp": "2023-11-11",
+        "unique": "543f0316805b11ee94b000155d29df2a",
+        "identifier": "test"
     }
 }

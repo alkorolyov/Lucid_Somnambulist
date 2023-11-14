@@ -934,6 +934,7 @@ the utility function somn.calculate.preprocess.prep_mc_labels"
             validation_data=(xval, yval),
             callbacks=[tensorboard, stop_nan],
             epochs=epoch_depth,
+            verbose=2,
         )  ## CHANGE increased this to 200 with change in optimizer to Adam, variable learning rate, and now using data augmentation during train
         val_hist = history.history[deep_objective]
         if min(val_hist) > max_val_cutoff:
@@ -952,6 +953,7 @@ the utility function somn.calculate.preprocess.prep_mc_labels"
                 use_multiprocessing=True,
                 # validation_split=0.15,
                 validation_data=(xval, yval),
+                verbose=2,
             )
             val_result = hypermodel.evaluate(xval, yval)
             tes_result = hypermodel.evaluate(xte, yte)
