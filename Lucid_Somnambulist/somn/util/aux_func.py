@@ -56,7 +56,7 @@ def check_reactant_role(mols: list):
 
 
 from keras.layers import Layer
-from keras.activations import sigmoid, softmax, leaky_relu, relu
+from keras.activations import sigmoid, softmax, relu #, leaky_relu
 from keras.initializers import Constant
 import tensorflow as tf
 
@@ -83,8 +83,8 @@ class CancelOut(Layer):
             self.activation = sigmoid
         if activation == "softmax":
             self.activation = softmax
-        if activation == "leaky_relu":
-            self.activation = leaky_relu
+        # if activation == "leaky_relu":
+        #     self.activation = leaky_relu
         if activation == "relu":
             self.activation = relu
 

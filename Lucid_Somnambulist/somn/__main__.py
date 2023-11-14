@@ -1,7 +1,14 @@
 ##Something
 import sys
+import logging
 from sys import argv
 from argparse import ArgumentParser
+
+import pandas as pd
+
+logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',
+                    level=logging.ERROR,
+                    datefmt='%d-%m-%Y %I:%M:%S')
 
 use_msg = """
 Welcome to the somn command-line interface. 
@@ -91,6 +98,7 @@ def _generate_partitions(args):
     else:
         val_schema = "vi_to"
     # print("DEV - val_schema: ", val_schema)
+    logging.debug(f"val_schema: {val_schema}")
     assert val_schema in [
         "to_vi",
         "vi_to",
@@ -101,6 +109,7 @@ def _generate_partitions(args):
         "to_noval",
     ]
     ## BEGINNING PREP - LOAD STATIC DATA/PREREQUISITES TO DESCRIPTORS
+    logging.debug('preprocess.load_data()')
     (
         amines,
         bromides,
@@ -138,6 +147,7 @@ def _generate_partitions(args):
     # os.makedirs(outdir + "rand/", exist_ok=True)
     realout = outdir + "real/"
     # randout = outdir + "rand/"
+    logging.debug("partition()")
     project.combos = combos
     project.unique_couplings = unique_couplings
     project.dataset = dataset
@@ -188,7 +198,7 @@ Here is a simple summary/guide:
 
 
 def main():
-    print("DEV - module")
+    logging.debug("module")
     parser = ArgumentParser(usage=use_msg)
     parser.add_argument(
         nargs="?",
@@ -210,7 +220,9 @@ def main():
         default=False,
     )
     args = parser.parse_args()
-    print(args)
+
+    logging.debug(f"command line args: {args}")
+
     if args.operation == "predict":  ## Make predictions
         try:
             _run_predictions(args)

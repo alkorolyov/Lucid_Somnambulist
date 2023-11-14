@@ -120,9 +120,9 @@ def corrX_new(df, cut=0.9, bool_out=True, get_const=False):
     avg_corr = corr_mtx.mean(axis=1)
     up = corr_mtx.where(np.triu(np.ones(corr_mtx.shape), k=1).astype(bool))
 
-    dropcols = list()
-
-    res = pd.DataFrame(columns=(["v1", "v2", "v1.target", "v2.target", "corr", "drop"]))
+    dropcols = []
+    res = []
+    # res = pd.DataFrame(columns=(["v1", "v2", "v1.target", "v2.target", "corr", "drop"]))
 
     for row in range(len(up) - 1):
         col_idx = row + 1
@@ -134,36 +134,58 @@ def corrX_new(df, cut=0.9, bool_out=True, get_const=False):
                 else:
                     dropcols.append(col)
                     drop = corr_mtx.columns[col]
+                s = [
+                    corr_mtx.index[row],
+                    up.columns[col],
+                    avg_corr[row],
+                    avg_corr[col],
+                    up.iloc[row, col],
+                    drop,
+                ]
+                res.append(s)
+                # s = pd.DataFrame(
+                #     [[
+                #         corr_mtx.index[row],
+                #         up.columns[col],
+                #         avg_corr[row],
+                #         avg_corr[col],
+                #         up.iloc[row, col],
+                #         drop,
+                #     ]],
+                #     columns=res.columns,
+                # )
+                # res = pd.concat([res, s], ignore_index=True)
 
-                s = pd.Series(
-                    [
-                        corr_mtx.index[row],
-                        up.columns[col],
-                        avg_corr[row],
-                        avg_corr[col],
-                        up.iloc[row, col],
-                        drop,
-                    ],
-                    index=res.columns,
-                )
+                # df.append() deprecated
+                # s = pd.Series(
+                #     [
+                #         corr_mtx.index[row],
+                #         up.columns[col],
+                #         avg_corr[row],
+                #         avg_corr[col],
+                #         up.iloc[row, col],
+                #         drop,
+                #     ],
+                #     index=res.columns,
+                # )
+                # res = res.append(s, ignore_index=True)
 
-                res = res.append(s, ignore_index=True)
-
+    res = pd.DataFrame(res, columns=(["v1", "v2", "v1.target", "v2.target", "corr", "drop"]))
     dropcols_names = calcDrop(res)
-    if bool_out == False:  # Don't want boolean, instead want column names
-        if get_const == True:  # Find constant columns and add names to drop list
+    if not bool_out:  # Don't want boolean, instead want column names
+        if get_const:  # Find constant columns and add names to drop list
             const_cols = [
                 f for f in corr_mtx.columns if corr_mtx[f].isnull().values.all()
             ]  # True if it should be kept
             return dropcols_names.extend(const_cols)
-        elif get_const == False:
+        elif not get_const:
             return dropcols_names
 
-    elif bool_out == True:  # Want boolean and column names
+    elif bool_out:  # Want boolean and column names
         maskout = [
             ~np.array(f in dropcols_names) for f in df.columns.to_list()
         ]  # True if it should be kept
-        if get_const == True:
+        if get_const:
             const_col_mask = ~np.array(
                 [
                     corr_mtx[f].isnull().values.all() for f in corr_mtx.columns
