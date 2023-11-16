@@ -4,38 +4,38 @@ import subprocess
 from time import time
 
 # import molli as ml
-from indigo import Indigo
-from openbabel import openbabel as ob
+# from indigo import Indigo
+# from openbabel import openbabel as ob
 from rdkit.Chem import AllChem as Chem
 
 
 TMP_DIR = '.crest_tmp'
 
-obmol = ob.OBMol()
-obconv = ob.OBConversion()
-obconv.SetInAndOutFormats("smi", "mol2")
-obconv.AddOption("h", ob.OBConversion.GENOPTIONS)
-gen3d = ob.OBOp.FindType("gen3D")
-
-indigo = Indigo()
+# obmol = ob.OBMol()
+# obconv = ob.OBConversion()
+# obconv.SetInAndOutFormats("smi", "mol2")
+# obconv.AddOption("h", ob.OBConversion.GENOPTIONS)
+# gen3d = ob.OBOp.FindType("gen3D")
+#
+# indigo = Indigo()
 
 def smi2xyz(smi):
     mol = Chem.AddHs(Chem.MolFromSmiles(smi))
     Chem.EmbedMolecule(mol)
     return Chem.MolToXYZBlock(mol)
 
-def smi_to_mol2(smi):
-    obconv.ReadString(obmol, smi)
-    gen3d.Do(obmol, "--fastest")
-    return obconv.WriteString(obmol)
-
-def mol2xyz(mol):
-    xyz = f'{mol.countAtoms()}\n\n'
-    for atom in mol.iterateAtoms():
-        # print(atom.symbol(), atom.index())
-        x, y, z = atom.xyz()
-        xyz += f"{atom.symbol()}\t{x:.6f}\t{y:.6f}\t{z:.6f}\n"
-    return xyz
+# def smi_to_mol2(smi):
+#     obconv.ReadString(obmol, smi)
+#     gen3d.Do(obmol, "--fastest")
+#     return obconv.WriteString(obmol)
+#
+# def mol2xyz(mol):
+#     xyz = f'{mol.countAtoms()}\n\n'
+#     for atom in mol.iterateAtoms():
+#         # print(atom.symbol(), atom.index())
+#         x, y, z = atom.xyz()
+#         xyz += f"{atom.symbol()}\t{x:.6f}\t{y:.6f}\t{z:.6f}\n"
+#     return xyz
 
 # def generate_constrain_input(constr_val_angles: list):
 #     atoms_constr = []
@@ -139,10 +139,8 @@ if __name__ == '__main__':
     # smi = 'C1NCOC1'
 
 
-
     xyz = smi2xyz(smi)
     # print(xyz)
-
 
     shutil.rmtree(TMP_DIR, ignore_errors=True)
     os.makedirs(TMP_DIR, exist_ok=True)
