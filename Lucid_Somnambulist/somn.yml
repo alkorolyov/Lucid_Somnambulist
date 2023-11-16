@@ -16,7 +16,6 @@ dependencies:
   - pytables
   - scipy
   - rdkit
-  - pymol-bundle
   - pip
   - tensorflow
   - pip:
