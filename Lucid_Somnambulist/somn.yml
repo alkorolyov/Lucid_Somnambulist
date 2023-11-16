@@ -17,11 +17,14 @@ dependencies:
   - scipy
   - rdkit
   - pip
-  - tensorflow
-  - pip:
-    - Pillow
-    - PyYAML
-    - colorama
+  - colorama
+  - Pillow
+  - PyYAML
+  # - tensorflow
+  # - pip:
+  #   - Pillow
+  #   - PyYAML
+  #   - colorama
     # - tensorflow==2.12
     # - tensorflow
 #    - keras-tuner
