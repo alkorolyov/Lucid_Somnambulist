@@ -21,7 +21,6 @@ from glob import glob
 
 # Load in raw calculated descriptors + random descriptors
 
-
 def main(
     project,
     val_schema="",
@@ -57,7 +56,7 @@ def main(
         set([val_schema])
         & set(["to_vi", "vi_to", "random", "vo_to", "to_vo", "noval_to", "to_noval"])
     )
-    if mask_substrates == True:
+    if mask_substrates:
         import pandas as pd
 
         am_mask = pd.read_csv(
@@ -116,7 +115,7 @@ def main(
                 sub_mask=sub_mask,
                 serialize_rand=serialize_rand,
             )
-            # ### DEBUG
+            ### DEBUG
             # if i == 4:
             #     break
     elif val_schema == "noval_to" or val_schema == "to_noval":
@@ -133,12 +132,8 @@ def main(
             ### DEV ###
             raise Exception("Under development")
     else:
-
-        # with mp.Pool(os.cpu_count()) as p:
-        #     p.map(combos_partition_func, combos)
-
         for i, val in enumerate(combos):
-            logging.debug(f": partition_pipeline: {i} / {len(combos)}")
+            logging.debug(f"partition_pipeline(): {i} / {len(combos)}")
 
             am, br = val.split("_")
             name_ = str(i + 1) + "_" + val + "_" + val_schema + "-schema"
@@ -175,40 +170,8 @@ def main(
                 serialize_rand=serialize_rand,
             )
             #### DEBUG
-            # if i == 4:
-            # break
-
-def partition_pipeline(val, project, val_schema):
-    pass
-    # multiprocessing
-    # am, br = val.split("_")
-    # name_ = str(i + 1) + "_" + val + "_" + val_schema + "-schema"
-    # if val_schema == "random":
-    #     ### RANDOM SPLITS ###
-    #     tr, va, te = preprocess.random_splits(dataset, validation=True, fold=10)
-    # ### OUT OF SAMPLE TEST, IN SAMPLE VAL ###
-    # # am_f,br_f,both,outsamp_handles = split_outsamp_reacts(data_df,amines=[44,38,32],bromides=[13],separate=True)
-    # elif val_schema == "to_vi" or val_schema == "vi_to":
-    #     outsamp_handles = preprocess.split_outsamp_reacts(
-    #         dataset, amines=[am], bromides=[br], separate=False
-    #     )
-    #     # tr,va,te,valm,testm = preprocess.platewise_splits(dataset,num_coup=5,save_mask=True,val_int=False,val_split=8,test_list=[uni_coup[i]])
-    #     temp, te = preprocess.outsamp_by_handle(dataset, outsamp_handles)
-    #     tr, va = preprocess.random_splits(
-    #         temp, validation=False, n_splits=1, fold=7
-    #     )
-    # partition_pipeline_val(
-    #     name_,
-    #     tr,
-    #     va,
-    #     te,
-    #     project,
-    #     vt=vt,
-    #     rand=rand,
-    #     real=real,
-    #     sub_mask=sub_mask,
-    #     serialize_rand=serialize_rand,
-    # )
+            if i == 0:
+                break
 
 def partition_pipeline_noval(
     name_, tr, te, vt=None, rand=None, real=None, sub_mask=False, serialize_rand=False
@@ -313,7 +276,7 @@ def partition_pipeline_val(
     ) = preprocess.new_mask_random_feature_arrays(
         (x_tr_real, x_va_real, x_te_real), (x_tr, x_va, x_te), _vt=vt
     )
-    if serialize_rand == True:
+    if serialize_rand:
         ### Rand copies of X
         x_tr_.to_feather(randout + name_ + "_rand-feat_xtr.feather")
         x_va_.to_feather(randout + name_ + "_rand-feat_xva.feather")

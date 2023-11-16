@@ -16,7 +16,8 @@ dependencies:
   - pytables
   - scipy
   - rdkit
-  - pip>=23
+  - pymol-bundle
+  - pip
   - tensorflow
   - pip:
     - Pillow
@@ -24,8 +25,8 @@ dependencies:
     - colorama
     # - tensorflow==2.12
     # - tensorflow
-    - keras-tuner
-    - attrs
+#    - keras-tuner
+#    - attrs
 
 # dependencies:
 #   - python=3.10

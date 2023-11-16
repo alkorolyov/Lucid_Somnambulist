@@ -1,0 +1,23 @@
+name: xtb
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - seaborn
+  - scikit-learn
+  - pyarrow
+  - openbabel
+  - xtb
+  - crest
+  - ipykernel
+  - notebook
+  - pytables
+  - scipy
+  - rdkit
+  - pip
+  - colorama
+  - pip:
+      - epam.indigo

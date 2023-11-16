@@ -121,7 +121,7 @@ def get_closest_gpts(coords, grid, atom):
     gpts = grid.gridpoints
     vdw = vdw_dict[atom.atom_type]["rad"]
     dist = np.sqrt(np.sum((gpts - coords) ** 2, axis=1))
-    # dist = np.linalg.norm(gpts-coords)
+    # dist = np.linalg.norm(gpts - coords)
     # print(dist)
     mask = dist < vdw
     return mask

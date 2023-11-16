@@ -1,3 +1,4 @@
+from line_profiler_pycharm import profile
 from itertools import product
 import pandas as pd
 import os
@@ -22,7 +23,7 @@ def get_labels(sub_df_dict, sub):
         desclabel.extend([f"{series.Index}_{i+1}" for i in range(len(series[1:]))])
     return desclabel
 
-
+@profile
 def vectorize_substrate_desc(sub_df_dict, sub, feat_mask=None):
     """
     Function to extract 2D RDF features, vectorize them, then apply optional feature selection mask
@@ -198,7 +199,6 @@ def load_substrate_masks():
 #             labels.append(handle)
 #         outdf = pd.DataFrame(columns, index=labels).transpose()
 #         return outdf
-
 
 def assemble_descriptors_from_handles(handle_input, desc: tuple, sub_mask=None):
     """

@@ -2,6 +2,7 @@
 # This may be useful for analyzing component space or performing unsupervised learning tasks.
 # This workflow also can be used by predict to generate features for new structures.
 import os
+import sys
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 from sys import argv
@@ -19,6 +20,7 @@ from somn.util.project import Project
 # temp_work = r"/mnt/c/Users/rineharn/workspace/linux/"
 
 #### Use example
+# python add.py smi 'COC1C2(CC2)CCN1' nuc
 # python add.py smi 'CC(=O)N1CCN(CC1)C2=CC=C(C=C2)OC[C@@H]3CO[C@@](O3)(CN4C=CN=C4)C5=C(C=C(C=C5)Cl)Cl' el
 ####
 
@@ -37,8 +39,7 @@ def add_workflow(project: Project, prediction_experiment: str, parser_args=None)
     Fourth argument is optional, -ser and any value after this will serialize. This isn't quite implemented as of early 5/2023. It defaults to yes.
 
     """
-
-    assert (len(parser_args) > 1) or (len(argv) > 1)
+    assert (len(parser_args) > 1 if parser_args else False) or (len(argv) > 1)
     parser = argparse.ArgumentParser(
         usage="Specify format (smi or cdxml), then a smiles string/file with smiles or cdxml file, and finally indicate 'el' or 'nuc' for electrophile or nucleophile. Optionally, serialize output structures with '-ser' - must pass some input as an argument after, standard use is 'y'"
     )
@@ -203,4 +204,5 @@ if __name__ == "__main__":
     # assert len(args) >= 2
     # how = args[1]
     project = Project()
-    add_workflow(project, prediction_experiment="testing01")
+    # sys.argv[:1] = ['smi', 'COC1C2(CC2)CCN1', 'nuc']
+    add_workflow(project, prediction_experiment="testing01", parser_args=['smi', 'CNC', 'nuc'])

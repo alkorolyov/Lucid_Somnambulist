@@ -953,6 +953,7 @@ the utility function somn.calculate.preprocess.prep_mc_labels"
                 use_multiprocessing=True,
                 # validation_split=0.15,
                 validation_data=(xval, yval),
+                verbose=2,
             )
             val_result = hypermodel.evaluate(xval, yval)
             tes_result = hypermodel.evaluate(xte, yte)

@@ -45,7 +45,7 @@ Next, install molli_firstgen using pip:
 - Install using pip into the somn environment following installation instructions.
 
  ```bash
- wget https://github.com/SEDenmarkLab/molli_firstgen/archive/refs/heads/main.zip -o molli.zip
+ wget https://github.com/SEDenmarkLab/molli_firstgen/archive/refs/heads/main.zip -O molli.zip
  pip install molli.zip
 ```
 

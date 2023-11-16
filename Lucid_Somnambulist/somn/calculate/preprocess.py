@@ -1,8 +1,10 @@
 import os
-
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+import logging
 import numpy as np
 import warnings
+import pickle
+from time import time
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 import pandas as pd
@@ -43,13 +45,27 @@ def load_data(optional_load=None):
         requests = optional_load.split(",")
     # amine molecules are stored as ACOL global variable, bromide molecules are stored as BCOL global variable
     ### Define a copy (to protect the global one) for each component needed
-    amines = deepcopy(ACOL)
-    bromides = deepcopy(BCOL)
-    data_raw = deepcopy(DATA)
-    a_prop = deepcopy(AMINES)
-    br_prop = deepcopy(BROMIDES)
-    base_desc = deepcopy(BASEDESC)
-    solv_desc = deepcopy(SOLVDESC)
+
+    start = time()
+
+    amines = pickle.loads(pickle.dumps(ACOL))
+    bromides = pickle.loads(pickle.dumps(BCOL))
+    data_raw = pickle.loads(pickle.dumps(DATA))
+    a_prop = pickle.loads(pickle.dumps(AMINES))
+    br_prop = pickle.loads(pickle.dumps(BROMIDES))
+    base_desc = pickle.loads(pickle.dumps(BASEDESC))
+    solv_desc = pickle.loads(pickle.dumps(SOLVDESC))
+
+    # amines = deepcopy(ACOL)
+    # bromides = deepcopy(BCOL)
+    # data_raw = deepcopy(DATA)
+    # a_prop = deepcopy(AMINES)
+    # br_prop = deepcopy(BROMIDES)
+    # base_desc = deepcopy(BASEDESC)
+    # solv_desc = deepcopy(SOLVDESC)
+
+    logging.debug(f'deepcopy {time() - start:.3f}s')
+
     ### Some "safety" check on handles - this will remove duplicates and make sure leading spaces, etc won't cause problems.
     dataset = cleanup_handles(data_raw)
     handles = dataset.index
@@ -57,10 +73,13 @@ def load_data(optional_load=None):
         list(set([f.rsplit("_", 3)[0] for f in handles]))
     )  # unique am_br pairs in dataset
     if "maxdiff_catalyst" in requests:
-        temp = deepcopy(CATDESC)
+        # temp = deepcopy(CATDESC)
+        temp = pickle.loads(pickle.dumps(CATDESC))
+        start = time()
         cat_desc = preprocess_maxdiff(
             temp, concat_grid_desc=True, threshold=(0.90, 0.89)
         )
+        logging.debug(f'preprocess_maxdiff() {time() - start:.3f}s')
     elif "correlated_catalyst" in requests:
         ...  # Perform correlated features cutoff for catalyst features. Perhaps look at multicolinearity
     elif "embed_catalyst" in requests:
@@ -70,7 +89,8 @@ def load_data(optional_load=None):
         ...
         ## Remove indicator fields for heteroatoms. This may be useful.
     else:
-        cat_desc = deepcopy(CATDESC)
+        # cat_desc = deepcopy(CATDESC)
+        cat_desc = pickle.loads(pickle.dumps(CATDESC))
     return (
         amines,
         bromides,

@@ -192,8 +192,8 @@ def prep_requests():
     df = pd.read_csv(files[0], header=0, index_col=None)
     if len(df.columns) < 2:
         raise Exception(
-            "Must pass SMILES and role for each reactant! Request input file (in gproject.scratch)\
-                        Shoult have format (col0):SMILES,(col1):role (nuc or el),(col2, optional):mol_name"
+            "Must pass SMILES and role for each reactant! Request input file (in project.scratch)\
+                        Should have format (col0):SMILES,(col1):role (nuc or el),(col2, optional):mol_name"
         )
     tot = []
     for i, file in enumerate(files):
@@ -294,7 +294,8 @@ This may cause an error if new molecules are requested now which were not calcul
 
 
 if __name__ == "__main__":
-    project = Project.reload(how="cc3d1f3a3d9211eebdbe18c04d0a4970")
+    # project = Project.reload(how="cc3d1f3a3d9211eebdbe18c04d0a4970")
+    project = Project.reload(how='last')
 
     ####################### DEV PREDICTIONS #################################
     import shutil

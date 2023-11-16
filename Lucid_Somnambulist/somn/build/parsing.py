@@ -98,7 +98,7 @@ class InputParser:
             random.SystemRandom().choice(string.digits + string.ascii_lowercase)
             for _ in range(3)
         )
-        if recursive_mode == False:
+        if not recursive_mode:
             obmol = ob.OBMol()
             obconv = ob.OBConversion()
             obconv.SetInAndOutFormats("smi", "mol2")
@@ -119,12 +119,12 @@ class InputParser:
             newmol = ml.Molecule.from_mol2(
                 obconv.WriteString(obmol), name=f"pr{str(date.today())}_{flag_}"
             )
-            if self.ser == True:
+            if self.ser:
                 self.serialize([newmol], specific_msg="smiles_preopt")
             col = ml.Collection(name="from_smi_hadd", molecules=[newmol])
             smi_d = {newmol.name: user_input}
             return col, smi_d
-        elif recursive_mode == True:
+        elif recursive_mode:
             assert type(user_input) == list
             if type(names) == list and len(names) != len(user_input):
                 warnings.warn(

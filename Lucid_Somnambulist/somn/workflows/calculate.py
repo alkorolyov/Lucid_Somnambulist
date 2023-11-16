@@ -118,7 +118,7 @@ def main(
                 full_br_df = pd.DataFrame.from_dict(
                     br_desc, orient="index", columns=br_label
                 )
-                if serialize == True:
+                if serialize:
                     full_br_df.to_csv(
                         f"{project.descriptors}/bromide_only_features.csv", header=True
                     )
@@ -181,7 +181,7 @@ def main(
         sub_am_dict, sub_br_dict, cat_desc, solv_desc, base_desc
     )
     # print(rand)
-    if serialize == True:
+    if serialize:
         with open(f"{project.descriptors}/random_am_br_cat_solv_base.p", "wb") as k:
             pickle.dump(rand, k)
         with open(f"{project.descriptors}/real_amine_desc_{_inc}.p", "wb") as g:

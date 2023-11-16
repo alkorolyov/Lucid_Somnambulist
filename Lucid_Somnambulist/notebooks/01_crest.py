@@ -6,6 +6,8 @@ from time import time
 # import molli as ml
 from indigo import Indigo
 from openbabel import openbabel as ob
+from rdkit.Chem import AllChem as Chem
+
 
 TMP_DIR = 'tmp'
 
@@ -16,6 +18,11 @@ obconv.AddOption("h", ob.OBConversion.GENOPTIONS)
 gen3d = ob.OBOp.FindType("gen3D")
 
 indigo = Indigo()
+
+def smi2xyz(smi):
+    mol = Chem.AddHs(Chem.MolFromSmiles(smi))
+    Chem.EmbedMolecule(mol)
+    return Chem.MolToXYZBlock(mol)
 
 def smi_to_mol2(smi):
     obconv.ReadString(obmol, smi)
@@ -63,7 +70,7 @@ def conformer_gen(
         mddump: float = 250.0,
         vbdump: float = 1.0,
         chk_topo = False,
-        constr_val_angles: list = ['P', 'Pd'],
+        constr_val_angles: list = [],
         force_const: float = 0.05,
         n_jobs: int = 12,
         verbose = False,
@@ -127,36 +134,45 @@ def xtb_optimize(
 
 
 if __name__ == '__main__':
-    smi = 'COC1=CC=CC([C@](O2)(CN3C=CN=C3)OC[C@H]2COC4=CC=CC=C4)=C1'
+    # smi = 'COC1=CC=CC([C@](O2)(CN3C=CN=C3)OC[C@H]2COC4=CC=CC=C4)=C1'
+    # smi = 'COC1CC(N)C1'
+    smi = 'COCCN'
 
-    mol = indigo.loadMolecule(smi)
-    mol.layout()
 
-    xyz = mol2xyz(mol)
 
+    xyz = smi2xyz(smi)
     # print(xyz)
 
-    xyz_fname = 'struc_01.xyz'
 
+    shutil.rmtree(TMP_DIR, ignore_errors=True)
     os.makedirs(TMP_DIR, exist_ok=True)
     os.chdir(TMP_DIR)
 
+    xyz_fname = 'struc_01.xyz'
     with open(xyz_fname, 'w') as f:
         f.write(xyz)
 
-    xtb_optimize(xyz_fname)
+    xtb_optimize(xyz_fname, method="gff")
 
     # if os.path.exists('xtbopt.xyz'):
     #     print('Success geometry optimization')
 
+    xyz_fname = 'xtbopt.xyz'
     conformer_gen(
-        xyz_name='xtbopt.xyz',
+        xyz_fname,
+        method="gfnff",
         ewin=8.0,
-        mdlen=5,
-        constr_val_angles=[],
+        mdlen=5.0,
+        n_jobs=8,
     )
 
-    # conformer_screen('crest_conformers.xyz', verbose=True)
+    xyz_fname = 'crest_conformers.xyz'
+    conformer_screen(
+        xyz_fname,
+        method="gfn2",
+        ewin=12.0,
+        n_jobs=24,
+        verbose=False)
 
 
     if os.path.exists('crest_ensemble.xyz'):

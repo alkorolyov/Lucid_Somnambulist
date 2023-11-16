@@ -1,3 +1,4 @@
+import logging
 import molli as ml
 import json
 from attrs import define, field
@@ -109,7 +110,7 @@ class PropheticInput:
         ):  # Single molecule; must be list to make col
             col = ml.Collection(name="molecule", molecules=[self.struc])
         elif self.state == "multi":
-            if self.known == False:
+            if not self.known:
                 col = self.struc
             elif isinstance(self.known, list):
                 col = ml.Collection(
@@ -137,7 +138,9 @@ class PropheticInput:
             concurrent=1,
         )
         # print("conformer search beginning")
+        logging.debug("conformer search beginning")
         output = concur_1(crest.conformer_search)(ewin=8, mdlen=5, constr_val_angles=[])
+        logging.debug(f"searched conf\n{output}")
         # print("searched conf\n", output)
         buffer = []
         tracking = {}  # Used to track progress
@@ -277,6 +280,9 @@ class PropheticInput:
         for confap, name in zip(atomprops, self.conformers.mol_index):
             if isinstance(confap[0], dict):
                 atomprop_out[name] = confap
+            # TODO convert to the corresponding dict format
+            elif isinstance(confap[0], pd.DataFrame):
+                atomprop_out[name] = [c.to_dict() for c in confap]
             else:
                 failures.append(name)
         self.atomprops = atomprop_out
@@ -341,7 +347,7 @@ class PropheticInput:
     @classmethod
     def from_col(cls, col, smi_list, role_list, parser):
         """
-        Initiate pipelien for new molecules
+        Initiate pipeline for new molecules
 
         collection, smiles list, role list
         """

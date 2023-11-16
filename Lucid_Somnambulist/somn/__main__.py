@@ -1,13 +1,15 @@
 ##Something
 import sys
 import logging
+import pickle
+from time import time
 from sys import argv
 from argparse import ArgumentParser
 
 import pandas as pd
 
 logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',
-                    level=logging.ERROR,
+                    level=logging.DEBUG,
                     datefmt='%d-%m-%Y %I:%M:%S')
 
 use_msg = """
@@ -72,14 +74,15 @@ def _generate_partitions(args):
     """
     opts = args.options
     ## DEV
-    # print(f"DEV {opts}")
     logging.debug(opts)
-    ##
+
+    start = time()
     from somn.workflows.partition import main as partition, get_precalc_sub_desc
     from somn.workflows.calculate import main as calc_sub
     from somn.workflows.calculate import preprocess
     from copy import deepcopy
     from somn.util.project import Project
+    logging.debug(f'partition imports {time() - start: .3f}s')
 
     ## IDENTIFY OR CREATE AND INSTANTIATE PROJECT ##
     if opts[0] == "new":
@@ -110,7 +113,7 @@ def _generate_partitions(args):
         "to_noval",
     ]
     ## BEGINNING PREP - LOAD STATIC DATA/PREREQUISITES TO DESCRIPTORS
-    logging.debug('preprocess.load_data()')
+    start = time()
     (
         amines,
         bromides,
@@ -123,10 +126,16 @@ def _generate_partitions(args):
         solv_desc,
         cat_desc,
     ) = preprocess.load_data(optional_load="maxdiff_catalyst")
+    logging.debug(f'preprocess.load_data() {time() - start:.3f}s')
 
+    # DEBUG
+    # return
+
+
+    start = time()
     # Checking project status to make sure sub descriptors are calculated
     sub_desc = get_precalc_sub_desc()
-    if sub_desc == False:  # Need to calculate
+    if not sub_desc:  # Need to calculate
         real, rand = calc_sub(
             project, optional_load="maxdiff_catalyst", substrate_pre=("corr", 0.95)
         )
@@ -134,13 +143,15 @@ def _generate_partitions(args):
     else:  # Already calculated descriptors, just fetching them
         sub_am_dict, sub_br_dict, rand = sub_desc
         real = (sub_am_dict, sub_br_dict, cat_desc, solv_desc, base_desc)
-    combos = deepcopy(
-        unique_couplings
+    combos = pickle.loads(
+        pickle.dumps(unique_couplings, -1)
     )  # This is a guide for building the partitions out - really, any set of combinations can be specified.
     # The amine_bromide individual elements in this list will direct out-of-sample partitioning (if relevant in val_schema).
     # Any specific set of out-of-sample partitions can be designed and introduced here. This *could* be an optional input from
     # the user (e.g. a csv file with a list of items in it).
     import os
+
+    logging.debug(f'get_precalc_sub_desc() {time() - start:.3f}s')
 
     # print(pd.DataFrame(combos).to_string())
     outdir = deepcopy(f"{project.partitions}/")
@@ -258,7 +269,10 @@ Ensure that project ID is provided, or specify 'new'."
 
 if __name__ == "__main__":
     pass
-    sys.argv[1:] = ['partition', 'new', 'test_proj'] # run once
-    # sys.argv[1:] = ['partition', 'last', 'test_proj']
+    # sys.argv[1:] = ['partition', 'new', 'test_proj'] # run once
     # sys.argv[1:] = ['learn', 'last', 'test_exp']
+
+    # smi BrC1=NC=C(C)C(Cl)=C1 el
+    # smi CC1C(C)NCCO1 nuc
+    sys.argv[1:] = ['predict', 'last', 'test_exp', 'test_pred']
     main()
