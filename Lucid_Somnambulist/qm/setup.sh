@@ -12,5 +12,8 @@ export PARNODES=24
 
 
 # setup timing
+
+chmod +x ~/bin/timing.sh
 #cp timing.sh ~/bin
+
 #echo "export PATH=:~/bin:$PATH" >> ~/.bashrc
