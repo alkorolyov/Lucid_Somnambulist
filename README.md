@@ -1,6 +1,10 @@
 
 (C) 2023 N. Ian Rinehart and the Denmark laboratory
 
+# Quick install
+wget https://raw.githubusercontent.com/alkorolyov/Lucid_Somnambulist/main/Lucid_Somnambulist/install.sh
+bash install.sh
+
 # Lucid_Somnambulist
 Welcome to the public repository for code developed in collaboration between Hoffmann-La Roche (Process Chemistry & Catalysis in Basel, Switzerland) and the Scott E. Denmark Laboratory (University of Illinois at Urbana Champaign) to provide experimentalists rapid access to predicted reaction yields for Buchwald-Hartwig couplings.
 
