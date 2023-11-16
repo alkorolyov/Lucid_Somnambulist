@@ -14,7 +14,7 @@ define <<EOF
 a coord
 *
 no
-b all def2-SVP
+b all $2
 *
 eht
 

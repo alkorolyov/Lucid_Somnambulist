@@ -9,7 +9,7 @@ from openbabel import openbabel as ob
 from rdkit.Chem import AllChem as Chem
 
 
-TMP_DIR = 'tmp'
+TMP_DIR = '.crest_tmp'
 
 obmol = ob.OBMol()
 obconv = ob.OBConversion()
@@ -135,8 +135,8 @@ def xtb_optimize(
 
 if __name__ == '__main__':
     # smi = 'COC1=CC=CC([C@](O2)(CN3C=CN=C3)OC[C@H]2COC4=CC=CC=C4)=C1'
-    # smi = 'COC1CC(N)C1'
-    smi = 'COCCN'
+    smi = 'COC1CC(N)C1'
+    # smi = 'C1NCOC1'
 
 
 
@@ -177,6 +177,8 @@ if __name__ == '__main__':
 
     if os.path.exists('crest_ensemble.xyz'):
         print('Success conformer screen')
+
+    shutil.copy('crest_best.xyz', '../crest_best.xyz')
 
     # for n_jobs in [2, 4, 6, 8, 12, 24]:
     #     shutil.copy('crest_conformers.xyz', '_crest_conformers.xyz')
