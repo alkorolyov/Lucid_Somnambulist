@@ -12,8 +12,8 @@
 #CONDA='anaconda' # IDE can automatically detect conda
 wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
 bash Miniforge3-Linux-x86_64.sh -b
-source ~/miniforge3/etc/profile.d/conda.sh
-source ~/miniforge3/etc/profile.d/mamba.sh
+echo "source ~/miniforge3/etc/profile.d/conda.sh" >> ~/.bashrc
+echo "source ~/miniforge3/etc/profile.d/mamba.sh" >> ~/.bashrc
 
 # somn
 git clone https://github.com/alkorolyov/Lucid_Somnambulist
