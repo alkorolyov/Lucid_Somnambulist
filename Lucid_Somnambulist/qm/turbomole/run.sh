@@ -7,7 +7,6 @@ mkdir $TMP_DIR
 x2t $1 > $TMP_DIR/coord
 cd $TMP_DIR
 
-
 define <<EOF
 
 
@@ -20,9 +19,12 @@ eht
 
 
 
+dft
+on
+func b3-lyp
+*
 *
 EOF
-
 
 # single point
 #dscf coord
