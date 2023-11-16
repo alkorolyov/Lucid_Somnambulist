@@ -2,6 +2,7 @@
 (C) 2023 N. Ian Rinehart and the Denmark laboratory
 
 Quick install
+
 ```
 wget https://raw.githubusercontent.com/alkorolyov/Lucid_Somnambulist/main/Lucid_Somnambulist/install.sh
 bash install.sh
