@@ -135,7 +135,7 @@ def calcDrop(res):
 
 
 def corrX_new(df, cut=0.9, bool_out=True, get_const=False):
-    # Get correlation matrix and upper triagle
+    # Get correlation matrix and upper triangle
     corr_mtx = df.corr().abs()
     avg_corr = corr_mtx.mean(axis=1)
     up = corr_mtx.where(np.triu(np.ones(corr_mtx.shape), k=1).astype(bool))

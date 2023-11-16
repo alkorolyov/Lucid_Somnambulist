@@ -935,6 +935,7 @@ the utility function somn.calculate.preprocess.prep_mc_labels"
             callbacks=[stop_nan], # slow callbacks
             verbose=2,
             epochs=epoch_depth,
+            verbose=2,
         )  ## CHANGE increased this to 200 with change in optimizer to Adam, variable learning rate, and now using data augmentation during train
         val_hist = history.history[deep_objective]
         if min(val_hist) > max_val_cutoff:
