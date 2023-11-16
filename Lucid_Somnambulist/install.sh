@@ -16,6 +16,7 @@ echo "source ~/miniforge3/etc/profile.d/conda.sh" >> ~/.bashrc
 echo "source ~/miniforge3/etc/profile.d/mamba.sh" >> ~/.bashrc
 
 # somn
+cd
 git clone https://github.com/alkorolyov/Lucid_Somnambulist
 cd Lucid_Somnambulist/Lucid_Somnambulist
 mamba env create --name somn --file somn.yml
