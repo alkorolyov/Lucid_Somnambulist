@@ -26,5 +26,5 @@ wget https://github.com/SEDenmarkLab/molli_firstgen/archive/refs/heads/main.zip 
 ~/miniforge3/envs/somn/bin/pip install -e . # editable mode
 
 # Check installation
-python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
-python3 -c "import somn"
+# python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+python -c "import somn"
